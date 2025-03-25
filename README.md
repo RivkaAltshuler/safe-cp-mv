@@ -3,7 +3,8 @@ Overview :
 
 This project enhances traditional cp (copy) and mv (move) operations by checking available disk space at the target location before performing the transfer. If there isn't enough space, the user is guided through interactive options to safely resolve the issue.
 
-Features
+Features :
+
 ✅ Pre-check Disk Space before copying/moving files
 ✅ Interactive User Options when space is low
 ✅ Supports Compression (--compress flag)
