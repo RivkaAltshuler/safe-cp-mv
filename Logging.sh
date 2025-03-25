@@ -15,6 +15,13 @@ success_logging(){
 }
 
 error_logging(){
+
+	if [ ! -f "$LOG_FILE" ] ;
+	then
+		touch "$LOG_FILE"
+	       	echo "Log file created succefully"
+      	fi
+
 	Message="$1"
 	timestamp=$(date "+%Y_%m_%d %H:%M:%S")
 	echo -e "Time : $timestamp\nError : $Message\n" >> "$LOG_FILE"
