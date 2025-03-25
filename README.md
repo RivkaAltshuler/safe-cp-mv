@@ -31,18 +31,13 @@ Run the script with the appropriate flags:
 
   ./safe_mv.sh --mv source_path destination_path
 
-- Additional      Options
- --------------------------
-
-Flag	            Description
-
---copy	          Perform a copy operation
-
---mv	            Perform a move operation
-
---compress	      Compress files before transferring
-
---dry-run	        Simulate the operation without executing it
+- Additional Options
+| Flag         | Description                                  |
+|-------------|----------------------------------------------|
+| `--copy`    | Perform a copy operation                     |
+| `--mv`      | Perform a move operation                     |
+| `--compress`| Compress files before transferring           |
+| `--dry-run` | Simulate the operation without executing it  |
 
 
 ...........................................................................................................................................................................................
