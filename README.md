@@ -1,11 +1,11 @@
 # safe-cp-mv
-Overview :
+**Overview**
 
 This project enhances traditional cp (copy) and mv (move) operations by checking available disk space at the target location before performing the transfer. If there isn't enough space, the user is guided through interactive options to safely resolve the issue.
 
 ...........................................................................................................................................................................................
 
-Features :
+**Features**
 
 ✅ Pre-check Disk Space before copying/moving files
 
@@ -19,7 +19,7 @@ Features :
 
 ...........................................................................................................................................................................................
 
-Usage :
+**Usage**
 
 Run the script with the appropriate flags:
 
@@ -43,7 +43,7 @@ Run the script with the appropriate flags:
 
 ...........................................................................................................................................................................................
 
-How It Works :
+**How It Works**
 
 1-Checks available disk space before moving/copying.
 
@@ -62,7 +62,7 @@ How It Works :
 
 ...........................................................................................................................................................................................
 
-Logging : 
+**Logging** 
 
 All operations are logged in logs/safe_copy.log with details such as:
 
