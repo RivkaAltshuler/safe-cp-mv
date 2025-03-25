@@ -32,6 +32,7 @@ Run the script with the appropriate flags:
   ./safe_mv.sh --mv source_path destination_path
 
 - Additional Options
+
 | Flag         | Description                                  |
 |-------------|----------------------------------------------|
 | `--copy`    | Perform a copy operation                     |
