@@ -6,9 +6,13 @@ This project enhances traditional cp (copy) and mv (move) operations by checking
 Features :
 
 ✅ Pre-check Disk Space before copying/moving files
+
 ✅ Interactive User Options when space is low
+
 ✅ Supports Compression (--compress flag)
+
 ✅ Safe File Deletion Suggestions (old/large files)
+
 ✅ Logging of All Operations
 
 Usage
@@ -24,7 +28,8 @@ Flag	      Description
 --compress	Compress files before transferring
 --dry-run	  Simulate the operation without executing it
 
-How It Works
+How It Works :
+
 1-Checks available disk space before moving/copying.
 2-If space is sufficient, proceeds after user confirmation.
 3-If space is insufficient, prompts the user with resolution options, such as:
@@ -33,7 +38,8 @@ How It Works
   -Suggesting an alternate destination
 4-Logs all operations for tracking.
 
-Logging
+Logging : 
+
 All operations are logged in logs/safe_copy.log with details such as:
 -Timestamp
 -Source & Destination paths
