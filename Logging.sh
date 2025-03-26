@@ -1,6 +1,7 @@
 #!/bin/bash
 . ./MainScript.sh
 
+#Print success operation performe to the safe_copy.log file
 success_logging(){
 
 	if [ ! -f "$LOG_FILE" ];
@@ -14,6 +15,7 @@ success_logging(){
 
 }
 
+#Print faiulre operation perform or Error message
 error_logging(){
 
 	if [ ! -f "$LOG_FILE" ] ;
