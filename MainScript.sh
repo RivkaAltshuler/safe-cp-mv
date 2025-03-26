@@ -21,13 +21,14 @@ DESTINATION_AVAILABLE_SPACE_AFTER=0
 
 . ./Logging.sh
 . ./SpaceCheck.sh
+. ./InitialValidation.sh
 #. ./SpaceEvaluation
 
 validate_arguments(){
+
 if [[ $# -lt 3 ]];
 then
 	message="Invalid arguments number , check the usage again !!"
-	echo "$message"
 	error_logging "$message"
 	exit 1
 else 
@@ -39,14 +40,15 @@ else
 	*)
 		message="Invalid operation argument , check the usage again !!"
 		error_logging "$message"
-		exit 1;;
+		exit 2;;
 	esac
 
-	SOURCE_FILE="$1"
-	#source_file_validation
+   	SOURCE_FILE="$1"
+	#check_if_file_exist 
 	
 	DESTINATION_PATH="$3"
-	#destination_path_validation
+	#check_writable
+
 
 	if [[ "$4" != "" ]];then
 		case "$4" in
@@ -57,7 +59,7 @@ else
 			    			DRY_RUN=true ;;
 				    	"");;
 				     	*)
-					     	message="Invalid secound optional argument, check the usage again!!" 
+						message="Invalid secound optional argument, check the usage again!!" 
 						error_logging "$message"
 					        exit 1  ;;
 				esac;;
@@ -85,13 +87,13 @@ fi
 
 main(){
 
-validate_arguments $1 $2 $3 $4 $5
-
+	validate_arguments "$@"
 	source_file_size
-	destination_available_space
+	destination_available_space	
 #	space_evaluation
 
 }
-main $1 $2 $3 $4 $5
+
+main "$@"
 
 
