@@ -1,8 +1,14 @@
 #!/bin/bash
-. ./MainScript.sh
+
 
 #Print success operation performe to the safe_copy.log file
 success_logging(){
+
+	if [ -z "$LOG_FILE" ]; then
+		
+	         echo "Error: LOG_FILE is not set!"
+		         exit 1
+			     fi
 
 	if [ ! -f "$LOG_FILE" ];
 	then
@@ -28,3 +34,4 @@ error_logging(){
 	timestamp=$(date "+%Y_%m_%d %H:%M:%S")
 	echo -e "Time : $timestamp\nError : $Message\n" >> "$LOG_FILE"
 }
+
