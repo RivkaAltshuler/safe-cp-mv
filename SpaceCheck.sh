@@ -3,14 +3,17 @@
 
 #check source file/dir size in KB
 source_file_size(){
-	SOURCE_FILE_SIZE=$(du -h $SOURCE_FILE)
+	local source=$1
+	local source_size=$(du -k "$source"| awk '{print $1}')
+	echo "$source_size"	
 }       
 
 #check destination free space in KB
 destination_available_space(){
-	
-	destination_size=$(du -sk "$DESTINATION_PATH" | awk '{print $1}') # Get size in KB
-	DESTINATION_AVAILABLE_SPACE=$((DIRECTORY_MAX_SIZE - destination_size))
+	local destination_path=$1
+	local directory_max_size=$2
+	local destination_size=$(du -sk "$destination_path" | awk '{print $1}') # Get size in KB
+	local destination_available_space=$((directory_max_size - destination_size))
+	echo "$destination_available_space"
 
 }
-
