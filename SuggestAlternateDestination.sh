@@ -1,16 +1,6 @@
 #!/bin/bash 
 
-#variables:
-#LOG_FILE
-#DIRECTORY_MAX_SIZE
-#SOURCE_FILE
-#DESTINATION_PATH
-#OPERATION
-#SOURCE_FILE_SIZE
-#DESTINATION_AVAILABLE_SPACE_BEFORE
-#DESTINATION_AVAILABLE_SPACE_AFTER
-#USER_SELECTED_RESOLUTION
-#OPERATION_PERFORM_STATU
+. ./MainScript.sh
 
 #adding new veriables to script for refrence :
 TOTAL_VOLUME=/path/to/directory/=1000 KB #*not sure it is correct or not to use this variable as i did , if not this needs to be configiured properly.
