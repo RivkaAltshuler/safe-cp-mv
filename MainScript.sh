@@ -10,12 +10,10 @@ DRY_RUN="false"
 USER_SELECTED_RESOLUTION=""
 OPERATION_PERFORM_STATUS=""
 
-#size in KB
-SOURCE_FILE_SIZ=0
+#size in KB0
 SOURCE_FILE_SIZE_BEFORE=0
 SOURCE_FILE_SIZE_AFTER=0
 DIRECTORY_MAX_SIZE=1000
-DESTINATION_AVAILABLE_SPACE=0
 DESTINATION_AVAILABLE_SPACE_BEFORE=0
 DESTINATION_AVAILABLE_SPACE_AFTER=0
 
@@ -40,14 +38,14 @@ else
 	*)
 		message="Invalid operation argument , check the usage again !!"
 		error_logging "$message"
-		exit 2;;
+		exit 1;;
 	esac
 
    	SOURCE_FILE="$1"
-	#check_if_file_exist 
+	check_if_file_exist $SOURCE_FILE 
 	
 	DESTINATION_PATH="$3"
-	#check_writable
+	check_writable $DESTINATION_PATH
 
 
 	if [[ "$4" != "" ]];then
@@ -88,12 +86,12 @@ fi
 main(){
 
 	validate_arguments "$@"
-	source_file_size
-	destination_available_space	
-#	space_evaluation
+	SOURCE_FILE_SIZE_BEFORE=$(source_file_size  $SOURCE_FILE )
+	DESTINATION_AVAILABLE_SPACE_BEFORE=$(destination_available_space $DESTINATION_PATH $DIRECTORY_MAX_SIZE)	
+#	space_evaluation $SOURCE_FILE_SIZE_BEFORE $DESTINATION_AVAILABLE_SPACE_BEFORE
 
 }
 
-main "$@"
+main "$@" 
 
 
