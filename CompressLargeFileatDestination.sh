@@ -1,7 +1,7 @@
 #!/bin/bash
 
-compress_large_files() {
-    
+compress_large_files() 
+{    
     destination_path=$1
 
     echo "Searching for files larger than 10000 bytes in $destination_path..."
@@ -18,19 +18,14 @@ compress_large_files() {
     read -p  "Do you want to compress them? (y/n)" confirmation
     
     if [[ "$confirmation" == "y" ]]; then
-        
+        saved_space=0
         for file in $large_files; do
             original_size=$(du -b "$file" | awk '{print $1}')
             gzip "$file"
             compressed_size=$(du -b "${file}.gz" | awk '{print $1}')
-            saved_space=$((original_size - compressed_size))
-            echo "Compressed: $file | original size: $original_size bytes | compressed size: $compressed_size bytes | Saved: $saved_space bytes"
+            saved_space=$((saved_space + original_size - compressed_size))
         done
-        
+        echo "Saved space: $saved_space bytes"        
         echo "Files were compressed."
     fi
-
-
 }
-
-compress_large_files "$1"
