@@ -17,7 +17,7 @@ success_logging(){
 	fi
 
 	timestamp=$(date "+%Y_%m_%d %H:%M:%S")
-	echo -e "Time : $timestamp\nSource file is : $SOURCE_FILEE\nDestination path : $DESTINATION_PATHE\nSize of source file : $DESTINATION_PATHE\nAvilable destination space befor : $DESTINATION_AVAILABLE_SPACE\nAvilable destination space after : $DESTINATION_AVAILABLE_SPACE_AFTER\nUser selected resolution step : $USER_SELECTED_RESOLUTION\nPerformance : $OPERATION_PERFORM_STATUS\n" >> "$LOG_FILE"
+	echo -e "Time : $timestamp\nSource file is : $SOURCE_FILEE\nDestination path : $DESTINATION_PATHE\nSize of source file : $SOURCE_FILE_SIZE\nAvilable destination space befor : $DESTINATION_AVAILABLE_SPACE_BEFORE\nAvilable destination space after : $DESTINATION_AVAILABLE_SPACE\nUser selected resolution step : $USER_SELECTED_RESOLUTION\nPerformance : $OPERATION_PERFORM_STATUS\n" >> "$LOG_FILE"
 
 }
 
