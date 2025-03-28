@@ -13,9 +13,9 @@ compress_source() {
        	echo "${source}.gz"
 }
 
-compressed_source_size(){
-	local source_file=$1
-	compressed_file=$(compress_source "$source_file")
-	source_file_size_after=$(source_file_size "$compressed_file")
-	echo "$source_file_size_after"
-}
+#compressed_source_size(){
+#	local source_file=$1
+#	compressed_file=$(compress_source "$source_file")
+#	source_file_size_after=$(source_file_size "$compressed_file")
+#	echo "$source_file_size_after"
+#}
