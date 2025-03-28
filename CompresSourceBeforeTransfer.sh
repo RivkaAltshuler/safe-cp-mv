@@ -5,8 +5,12 @@
 # Function to compress a file or directory
 compress_source() {
        	local source="$1"
-        $(tar -czf "${source}.tar.gz" "$source")
-        echo "${source}.tar.gz"
+	local compressed_file=$(gzip -c "$source" > "${source}.gz")
+        if [[ "$compressed_file" -ne 0 ]]; then
+	     	error_logging "Compression failed for $SOURCE_FILE ."
+                exit 1                       
+	fi
+       	echo "${source}.gz"
 }
 
 compressed_source_size(){

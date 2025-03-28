@@ -11,16 +11,18 @@ DRY_RUN="false"
 . ./Logging.sh
 . ./InitialValidation.sh
 . ./SpaceEvaluation.sh
+. ./PerformOperation.sh
 
 validate_arguments(){
 
-if [[ $# -lt 3 ]];
-then
-	message="Invalid arguments number , check the usage again !!"
-	error_logging "$message"
-	exit 1
-else 
-	case "$2" in
+	if [[ $# -lt 3 ]];
+	then
+		message="Invalid arguments number , check the usage again !!"
+		error_logging "$message"
+		exit 1
+	fi
+
+	case "$1" in
 	--copy)
 		OPERATION="cp";;
 	--mv)
@@ -31,7 +33,7 @@ else
 		exit 1;;
 	esac
 
-   	SOURCE_FILE="$1"
+   	SOURCE_FILE="$2"
 	check_if_file_exist $SOURCE_FILE 
 	
 	DESTINATION_PATH="$3"
@@ -69,17 +71,16 @@ else
 			        exit 1;;
 		esac
 	fi
-fi
-}
 
-
-main(){
-
-	validate_arguments "$@"
-	space_evaluation "$DESTINATION_PATH" "$SOURCE_FILE" "$COMPRESS" 
+echo "$OPERATION $SOURCE_FILE $DESTINATION_PATH $COMPRESS $DRY_RUN"
 
 }
 
-main "$@" 
+main() {
+	    validate_arguments "$@" 
+	    space_evaluation 
+	}
+
+main "$@"
 
 
