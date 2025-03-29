@@ -17,7 +17,8 @@ THRESHOLD_DAYS=0
 FIRST_TRY="true"
 
 #size in KB0
-DIRECTORY_MAX_SIZE=10
+DIRECTORY_MAX_SIZE=135
+
 SOURCE_FILE_SIZE=0
 DESTINATION_AVAILABLE_SPACE=0
 DESTINATION_AVAILABLE_SPACE_BEFORE=0
@@ -42,7 +43,7 @@ space_evaluation() {
 		DESTINATION_AVAILABLE_SPACE=$(destination_available_space "$DESTINATION_PATH" "$DIRECTORY_MAX_SIZE")
 
 		local check_sufficient=$(space_is_sufficient)
-#echo "hhhhhh$SOURCE_FILE source size: $SOURCE_FILE_SIZE des $DESTINATION_PATH oper $OPERATION size $DESTINATION_AVAILABLE_SPACE check :$check_sufficient toocompress:$COMPRESS"
+echo "hhhhhh$SOURCE_FILE source size: $SOURCE_FILE_SIZE des $DESTINATION_PATH oper $OPERATION size $DESTINATION_AVAILABLE_SPACE check :$check_sufficient toocompress:$COMPRESS"
 
 		if [[ $check_sufficient == "true" ]]; then
 		    	echo "Source size: $SOURCE_FILE_SIZE KB"
@@ -54,18 +55,16 @@ space_evaluation() {
 		 		error_logging "Operation cancelled."
 			        exit 0
 		        fi
-
 			if [[ "$COMPRESS" == "true" ]]; then
-				#echo "bbbbbb $compressed_source nnnnnnnnnn $SOURCE_FILE"
+			
 				echo "Compressing source before transfer..."
 		                compressed_source=$(compress_source "$SOURCE_FILE")
 				SOURCE_FILE="$compressed_source"
-				#echo "bbbbbbbbbb $compressed_source nnnnnnnn  $SOURCE_FILE"
-
+				SOURCE_FILE_SIZE=$(source_file_size "$SOURCE_FILE" )
+				
 			fi 
-		    	
 				perform_operation
-				#echo "hiiii"
+				DESTINATION_AVAILABLE_SPACE_BEFORE="$DESTINATION_AVAILABLE_SPACE"
 				OPERATION_PERFORM_STATUS="Success"
 				success_logging
 				exit 0
@@ -76,7 +75,7 @@ space_evaluation() {
 			resolve_space_issue
 	                FIRST_TRY="false"
 		else
-				echo "Not enough space available at $DESTINATION_PATHE. Choose an option:"
+				echo "Not enough space available at $DESTINATION_PATH , Choose an option:"
 				echo "1) Retry Cleanup"
 				echo "2) Cancel operation"
 	       			while true; do
