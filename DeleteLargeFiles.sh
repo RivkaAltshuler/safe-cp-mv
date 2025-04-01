@@ -1,64 +1,39 @@
 #!/bin/bash
 
-#variables:
-#LOG_FILE
-#DIRECTORY_MAX_SIZE
-#SOURCE_FILE
-#DESTINATION_PATH
-#OPERATION
-#SOURCE_FILE_SIZE
-#DESTINATION_AVAILABLE_SPACE_BEFORE
-#DESTINATION_AVAILABLE_SPACE_AFTER
-#USER_SELECTED_RESOLUTION
-#OPERATION_PERFORM_STATUS
+delete_large_files(){
 
-# adding new variables to acript: minimum file size.       
-MIN_SIZE="+100M"              
-      
-# Find files larger than $min_size, sort them by size, and display the top 3 largest files.
-function scan_large_files {
-    echo "Scanning for files larger than $MIN_SIZE in $DESTINATION_PATH..."
-    log_operation "Started scanning directory $DESTINATION_PATH"
+	destination_path=$1
+        size_threshold=$2  # Size threshold in KB (change as needed)
+	
+	#Find files larger than the specified size, sorted by size (largest first)
+        large_files=$(find "$destination_path" -type f -size +"${size_threshold}k" -exec du -k {} + | sort -nr)
 
-    find "$DESTINATION_PATH" -type f -size "$MIN_SIZE" -exec ls -lh {} \; | awk '{ print $9 ": " $5 }' | sort -k2 -hr | head -n 3
+        if [ -z "$large_files" ]; then
+		echo "No files larger than $size_threshold KB found in $destination_path."
+	else
+		file_count=$(echo "$large_files" | wc -l)
+		total_size=$(echo "$large_files" | awk '{sum += $1} END {print sum}')
+		echo "Found $file_count large files with total size: $total_size KB in $destination_path."
+		echo "--------------------------------------------------------"
+		
+ 		#Use a loop to print the table correctly
+          	while IFS= read -r line; do
+                     size=$(echo "$line" | awk '{print $1}')
+                     path=$(echo "$line" | awk '{print substr($0, index($0,$2))}')
+                     filename=$(basename "$path")
+                     printf "%-10s %-30s %-s\n" "$size" "$filename" "$path"
+                     done <<< "$large_files"
 
-    log_operation "Finished scanning in directory $DESTINATION_PATH"
+		echo "--------------------------------------------------------"
+		read -p "Do you want to delete these files? (y/n) " confirmation
+
+		if [[ "$confirmation" == "y" ]]; then
+
+			echo "$large_files" | awk '{print $2}' | xargs rm -f
+			echo "Deletion complete!"
+		else
+			echo "Operation canceled."
+		fi
+	fi
 }
-
-delete_large_files() {
-    echo "Scanning for largest files in $DESTINATION_PATH..."
-    log_operation "Scanning for large files in $DESTINATION_PATH"
-
-    LARGE_FILES=$(find "$DESTINATION_PATH" -type f -size "$MIN_SIZE" -exec ls -lh {} + | awk '{ print $9, $5 }' | sort -k2 -rh | head -n 3)
-
-        if [[ -z "$LARGE_FILES" ]]; then
-        echo "No large files found in $DESTINATION_PATH."
-        log_operation "No large files found for deletion."
-        return
-        fi
-
-    echo "Top 3 largest files:"
-    echo "$LARGE_FILES"
-
-    #ask the user if he like to delete the files, part of them or quit. 
-    echo "Enter the number of the file you want to delete, or type 'all' to delete all listed files, or 'q' to quit:"
-    select file in $(echo "$LARGE_FILES" | awk '{print $1}') "All" "Quit"; do
-        if [[ "$file" == "Quit" ]]; then
-            echo "Skipping file deletion."
-            log_operation "User skipped large file deletion."
-            return
-        elif [[ "$file" == "All" ]]; then
-            echo "Deleting all listed files..."
-            echo "$LARGE_FILES" | awk '{print $1}' | xargs rm -f
-            log_operation "Deleted all listed large files."
-            break
-        elif [[ -n "$file" ]]; then
-            echo "Deleting $file..."
-            rm -f "$file"
-            log_operation "Deleted file: $file"
-            break
-        else
-            echo "Invalid selection. Please try again."
-        fi
-    done
-}
+	
