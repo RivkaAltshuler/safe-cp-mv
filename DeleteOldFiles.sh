@@ -11,8 +11,8 @@ delete_old_files() {
         echo "No old files found in $destination_path"
     else
     	file_count=$(echo "$old_files" | wc -l)
-	    total_size=$(du -sb $old_files | awk '{print $1}')
-	    echo "Found $file_count old files with size: $total_size bytes in $destination_path"
+	    total_size=$(du -sk $old_files | awk '{sum += $1} END {print sum}')
+	    echo "Found $file_count old files with size: $total_size kb in $destination_path"
         read -p "Do you want to delete them? (y/n)" confirmation
         if [[ "$confirmation" == "y" ]]; then
             for file in $old_files; do

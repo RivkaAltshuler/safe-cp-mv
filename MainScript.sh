@@ -72,7 +72,6 @@ validate_arguments(){
 		esac
 	fi
 
-echo "$OPERATION $SOURCE_FILE $DESTINATION_PATH $COMPRESS $DRY_RUN"
 
 }
 

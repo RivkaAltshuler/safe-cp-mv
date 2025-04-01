@@ -4,8 +4,14 @@
 #check source file/dir size in KB
 source_file_size(){
 	local source=$1
-	local source_size=$(du -k "$source"| awk '{print $1}')
-	echo "$source_size"	
+	
+	#Get the allocated size (4 KB for empty files or less if the file size is small)
+	local source_size=$(du -k "$source" | awk '{print $1}')
+	# If the file is empty, ensure that we return at least 4 KB (allocated block size for most filesystems)
+	if [[ "$source_size" -eq 0 ]]; then
+		source_size=4
+        fi
+ 	echo "$source_size"	
 }       
 
 #check destination free space in KB
