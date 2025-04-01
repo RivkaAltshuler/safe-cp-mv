@@ -76,4 +76,7 @@ All operations are logged in logs/safe_copy.log with details such as:
 
 -Success or failure messages
 
+...........................................................................................................................................................................................
 
+**Project Presentation**
+https://docs.google.com/presentation/d/1_Sd1e_MVm2FnhOXzBnUbnqyPjJ9vV_FC/edit?usp=sharing&ouid=114373315287084297965&rtpof=true&sd=true
